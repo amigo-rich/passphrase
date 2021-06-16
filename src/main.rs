@@ -17,5 +17,10 @@ fn main() {
         .get_matches();
     let wordlist = matches.value_of("wordlist").unwrap();
     let wordcount: u32= matches.value_of("count").unwrap().parse().unwrap_or(6_u32);
-    passphrase::run(wordlist, wordcount);
+    match passphrase::run(wordlist, wordcount) {
+        Ok(()) => (),
+        Err(e) => {
+            eprintln!("{}", e);
+        }
+    }
 }
