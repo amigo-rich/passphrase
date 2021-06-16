@@ -12,7 +12,8 @@ pub fn run(wordlist: &str, wordcount: u32) -> Result<(), Error> {
     let map = Map::new(&mut file)?;
     for _ in 0..wordcount {
         let sequence = Sequence::new(5);
-        println!("{} ", map.get(&u32::from(sequence)).unwrap());
+        print!("{} ", map.get(&u32::from(sequence)).unwrap());
     }
+    println!();
     Ok(())
 }
