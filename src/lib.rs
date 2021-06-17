@@ -8,7 +8,7 @@ use map::Map;
 use std::fs::File;
 
 pub fn run(wordlist: &str, wordcount: u32) -> Result<(), Error> {
-    let mut file = File::open(wordlist)?;
+    let mut file = File::open(wordlist).map_err(|_| Error::FileNotFound(wordlist.to_string()))?;
     let map = Map::new(&mut file)?;
     for _ in 0..wordcount {
         let sequence = Sequence::new(5);

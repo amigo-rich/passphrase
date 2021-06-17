@@ -12,17 +12,17 @@ pub struct Pair {
 impl Pair {
     pub fn new(line: &str) -> Result<Pair, Error> {
         if line.is_empty() || line.len() > 128 {
-            return Err(Error::PairParseLine(line.to_string()));
+            return Err(Error::ParseLine(line.to_string()));
         }
 
         let fields: Vec<&str> = line.split('\t').collect();
         if fields.len() != 2 {
-            return Err(Error::PairParseLine(line.to_string()));
+            return Err(Error::ParseLine(line.to_string()));
         }
         let roll: u32 = match fields[0].parse() {
             Ok(roll) => roll,
             Err(_) => {
-                return Err(Error::PairParseLine(line.to_string()));
+                return Err(Error::ParseLineNumber(line.to_string()));
             }
         };
         let word = String::from(fields[1].trim());
@@ -42,7 +42,7 @@ impl Map {
 
         file.read_to_string(&mut input)?;
         if input.is_empty() {
-            return Err(Error::MapIOError);
+            return Err(Error::IO);
         }
         for line in input.lines() {
             let pair = Pair::new(line)?;
