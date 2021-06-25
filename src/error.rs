@@ -6,6 +6,7 @@ pub enum Error {
     ParseLineNumber(String),
     IO(std::io::Error),
     FileEmpty,
+    InvalidArgument(String, String),
 }
 
 impl fmt::Display for Error {
@@ -16,6 +17,9 @@ impl fmt::Display for Error {
             Error::ParseLineNumber(line) => write!(f, "Parse of number on line: {}", line),
             Error::IO(e) => write!(f, "An IO error occurred during read_to_string: {}", e),
             Error::FileEmpty => write!(f, "The file provided is empty"),
+            Error::InvalidArgument(origin, reason) => {
+                write!(f, "Invalid argument provided to {}: {}", origin, reason)
+            }
         }
     }
 }
