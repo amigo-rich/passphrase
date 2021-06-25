@@ -4,7 +4,8 @@ pub enum Error {
     FileNotFound(String),
     ParseLine(String),
     ParseLineNumber(String),
-    IO,
+    IO(std::io::Error),
+    FileEmpty,
 }
 
 impl fmt::Display for Error {
@@ -13,13 +14,14 @@ impl fmt::Display for Error {
             Error::FileNotFound(path) => write!(f, "Failed to open file: {}", path),
             Error::ParseLine(line) => write!(f, "Parse to pair of line: {}", line),
             Error::ParseLineNumber(line) => write!(f, "Parse of number on line: {}", line),
-            Error::IO => write!(f, "An IO error occurred during read_to_string"),
+            Error::IO(e) => write!(f, "An IO error occurred during read_to_string: {}", e),
+            Error::FileEmpty => write!(f, "The file provided is empty"),
         }
     }
 }
 
 impl From<std::io::Error> for Error {
-    fn from(_: std::io::Error) -> Error {
-        Error::IO
+    fn from(e: std::io::Error) -> Error {
+        Error::IO(e)
     }
 }

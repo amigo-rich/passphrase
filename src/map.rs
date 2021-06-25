@@ -40,9 +40,9 @@ impl Map {
         let mut input = String::new();
         let mut map: HashMap<u32, String> = HashMap::new();
 
-        file.read_to_string(&mut input)?;
+        let _ = file.read_to_string(&mut input).map_err(Error::IO);
         if input.is_empty() {
-            return Err(Error::IO);
+            return Err(Error::FileEmpty);
         }
         for line in input.lines() {
             let pair = Pair::new(line)?;
