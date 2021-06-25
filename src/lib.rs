@@ -17,7 +17,7 @@ pub fn run(wordlist: &str, wordcount: u32, seperator: &str) -> Result<(), Error>
         let sequence = Sequence::new(5);
         words.push(map.get(&u32::from(sequence)).unwrap());
     }
-    let output = Formatter::new([Preference::Seperator(seperator)].as_ref()).fomat(&words);
+    let output = Formatter::new([Preference::Seperator(seperator)].as_ref()).format(&words);
     println!("{}", output);
     Ok(())
 }

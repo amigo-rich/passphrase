@@ -22,7 +22,7 @@ impl<'a> Formatter<'a> {
         }
         f
     }
-    pub fn fomat(&self, words: &[&str]) -> String {
+    pub fn format(&self, words: &[&str]) -> String {
         let mut output = String::new();
         let count = words.len();
         for (index, word) in words.iter().enumerate() {
