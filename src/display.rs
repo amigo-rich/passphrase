@@ -2,15 +2,20 @@ use crate::error::Error;
 
 pub enum Preference<'a> {
     Seperator(&'a str),
+    CapitalCase(bool),
 }
 
 pub struct Formatter<'a> {
     seperator: &'a str,
+    capital_case: bool,
 }
 
 impl Default for Formatter<'_> {
     fn default() -> Self {
-        Formatter { seperator: " " }
+        Formatter {
+            seperator: " ",
+            capital_case: false,
+        }
     }
 }
 
@@ -20,6 +25,7 @@ impl<'a> Formatter<'a> {
         for preference in preferences {
             match preference {
                 Preference::Seperator(s) => f.seperator = *s,
+                Preference::CapitalCase(b) => f.capital_case = *b,
             }
         }
         f
@@ -40,7 +46,12 @@ impl<'a> Formatter<'a> {
                     "Empty word provided".to_string(),
                 ));
             }
-            output.push_str(word);
+            if self.capital_case {
+                output.push(word.chars().nth(0).unwrap().to_ascii_uppercase());
+                output.push_str(&word[1..]);
+            } else {
+                output.push_str(word);
+            }
             if index != count - 1 {
                 output.push_str(self.seperator);
             }
