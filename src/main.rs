@@ -1,4 +1,14 @@
-use clap::{App, Arg};
+use clap::{App, Arg, ArgMatches};
+use passphrase::Runtime;
+
+fn make_runtime<'a>(matches: &'a ArgMatches) -> Runtime<'a> {
+    Runtime {
+        wordlist: matches.value_of("wordlist").unwrap(),
+        wordcount: matches.value_of("count").unwrap().parse().unwrap_or(6_u32),
+        seperator: matches.value_of("seperator").unwrap(),
+        want_capital: matches.is_present("capital"),
+    }
+}
 
 fn main() {
     let matches = App::new("passphrase")
@@ -22,11 +32,7 @@ fn main() {
         )
         .arg(Arg::with_name("capital").long("capital"))
         .get_matches();
-    let wordlist = matches.value_of("wordlist").unwrap();
-    let wordcount: u32 = matches.value_of("count").unwrap().parse().unwrap_or(6_u32);
-    let seperator: &str = matches.value_of("seperator").unwrap();
-    let want_camel = matches.is_present("capital");
-    match passphrase::run(wordlist, wordcount, seperator, want_camel) {
+    match passphrase::run(&make_runtime(&matches)) {
         Ok(()) => (),
         Err(e) => {
             eprintln!("{}", e);
