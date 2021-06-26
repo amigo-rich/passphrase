@@ -47,7 +47,7 @@ impl<'a> Formatter<'a> {
                 ));
             }
             if self.capital_case {
-                output.push(word.chars().nth(0).unwrap().to_ascii_uppercase());
+                output.push(word.chars().next().unwrap().to_ascii_uppercase());
                 output.push_str(&word[1..]);
             } else {
                 output.push_str(word);
