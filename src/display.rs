@@ -37,9 +37,12 @@ impl<'a> Formatter<'a> {
                 "argument 'words' is empty".to_string(),
             ));
         }
-        let mut output = String::new();
-        let count = words.len();
-        for (index, word) in words.iter().enumerate() {
+        Ok(self.create_formatted_string(words)?)
+    }
+    fn create_formatted_string(&self, input: &[&str]) -> Result<String, Error> {
+        let mut output: String = String::new();
+
+        for (index, word) in input.iter().enumerate() {
             if word.is_empty() {
                 return Err(Error::InvalidArgument(
                     "Formatter::format".to_string(),
@@ -52,7 +55,7 @@ impl<'a> Formatter<'a> {
             } else {
                 output.push_str(word);
             }
-            if index != count - 1 {
+            if index != input.len() - 1 {
                 output.push_str(self.seperator);
             }
         }
