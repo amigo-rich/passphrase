@@ -37,7 +37,7 @@ impl<'a> Formatter<'a> {
                 "argument 'words' is empty".to_string(),
             ));
         }
-        Ok(self.create_formatted_string(words)?)
+        self.create_formatted_string(words)
     }
     fn create_formatted_string(&self, input: &[&str]) -> Result<String, Error> {
         let mut output: String = String::new();
