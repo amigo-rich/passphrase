@@ -27,9 +27,7 @@ impl Sequence {
             rolls.push(Dice::new());
         }
 
-        Sequence {
-            rolls,
-        }
+        Sequence { rolls }
     }
 }
 
